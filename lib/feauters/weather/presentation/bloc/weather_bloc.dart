@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather_app/feauters/weather/data/model/response/response.dart';
@@ -10,11 +9,18 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepositoryInterface _weatherRepositoryInterface;
+  Timer? _timer;
+  String city = 'Omks';
 
   WeatherBloc({required WeatherRepositoryInterface weatherRepositoryInterface})
       : _weatherRepositoryInterface = weatherRepositoryInterface,
         super(const WeatherLoadingState()) {
     on<WeatherFetchEvent>(_onFetchWeather);
+
+    _timer = Timer.periodic(
+      Duration(seconds: 5),
+      (_) => add(WeatherFetchEvent(city: city)),
+    );
   }
 
   Future<void> _onFetchWeather(
@@ -23,12 +29,20 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) async {
     emit(const WeatherLoadingState());
 
+    city = event.city;
+
     final result = await _weatherRepositoryInterface.fetchWeather(
       key: 'd62829a23f7b43fda37173712242911',
-      city: event.city,
+      city: city,
     );
 
     result.fold((l) => emit(WeatherFailureState(message: l.error.message)),
         (r) => emit(WeatherLoadedState(response: r)));
+  }
+
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    return super.close();
   }
 }

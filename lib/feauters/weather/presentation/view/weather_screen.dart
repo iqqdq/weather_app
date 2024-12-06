@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +12,6 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   final _textEditingController = TextEditingController();
-  Timer? _timer;
 
   @override
   void initState() {
@@ -24,16 +21,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
           () => _updateWeather(city: _textEditingController.text),
         ));
 
-    _timer = Timer.periodic(Duration(hours: 1),
-        (_) => _updateWeather(city: _textEditingController.text));
-
     super.initState();
   }
 
   @override
   void dispose() {
     _textEditingController.dispose();
-    _timer?.cancel();
+
     super.dispose();
   }
 
