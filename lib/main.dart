@@ -40,8 +40,7 @@ class WeatherApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) => WeatherBloc(
             weatherRepositoryInterface:
-                WeatherRepositoryImpl(apiClient: apiClient))
-          ..add(WeatherFetchEvent(city: 'Omsk')),
+                WeatherRepositoryImpl(apiClient: apiClient)),
         child: const WeatherScreen(),
       ),
     );
