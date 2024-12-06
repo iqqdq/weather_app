@@ -18,7 +18,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<WeatherFetchEvent>(_onFetchWeather);
 
     _timer = Timer.periodic(
-      Duration(seconds: 5),
+      Duration(hours: 1),
       (_) => add(WeatherFetchEvent(city: city)),
     );
   }
