@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 import 'package:weather_app/api/api.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/feauters/weather/data/repository/weather_repository_impl.dart';
 import 'package:weather_app/feauters/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/feauters/weather/presentation/view/weather_screen.dart';
@@ -40,7 +41,8 @@ class WeatherApp extends StatelessWidget {
       home: BlocProvider(
         create: (context) => WeatherBloc(
             weatherRepositoryInterface:
-                WeatherRepositoryImpl(apiClient: apiClient)),
+                WeatherRepositoryImpl(apiClient: apiClient))
+          ..add(WeatherFetchEvent(city: omsk)),
         child: const WeatherScreen(),
       ),
     );

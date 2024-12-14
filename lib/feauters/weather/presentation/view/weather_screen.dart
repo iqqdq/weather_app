@@ -1,6 +1,7 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/core.dart';
 import 'package:weather_app/feauters/weather/presentation/bloc/weather_bloc.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             height: 54.0,
             child: TextField(
               controller: _textEditingController,
-              decoration: InputDecoration(hintText: 'Search'),
+              decoration: InputDecoration(hintText: search),
             ),
           ),
 
@@ -89,5 +90,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   void _updateWeather({required String city}) =>
       BlocProvider.of<WeatherBloc>(context)
-          .add(WeatherFetchEvent(city: city.isEmpty ? 'Omsk' : city));
+          .add(WeatherFetchEvent(city: city.isEmpty ? omsk : city));
 }
