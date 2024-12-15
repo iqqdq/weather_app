@@ -37,8 +37,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       city: city,
     );
 
-    result.fold((l) => emit(WeatherFailureState(message: l.error.message)),
-        (r) => emit(WeatherLoadedState(response: r)));
+    result.fold(
+      (l) => emit(WeatherFailureState(message: l.error.message)),
+      (r) => emit(WeatherLoadedState(response: r)),
+    );
   }
 
   @override
